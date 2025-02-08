@@ -10,21 +10,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 COPY . .
-
-RUN composer global config --no-plugins allow-plugins.symfony/flex true
-
-RUN composer global require symfony/flex
-
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer require symfony/debug-bundle --dev
-
-
-
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
-# Permisos
+
 RUN chown -R www-data:www-data /var/www/html
 
-# Exponer el puerto
-EXPOSE 8000
+# exposing the port, we will access this in localhost:8000
+EXPOSE 9000
 
 CMD ["php-fpm"]
