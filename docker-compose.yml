@@ -26,14 +26,14 @@ services:
       networks:
         - app_network
 
-    #the frontend will be served by an angular server, we will access it in localhost:4200
+    #the frontend will be served by an angular server, we will access it in localhost:8080
     frontend:
       build:
         context: ./Frontend
       container_name: angular_app
       restart: unless-stopped
       ports:
-        - "4200:4200"
+        - "8080:80"
       depends_on:
         - backend
       networks:

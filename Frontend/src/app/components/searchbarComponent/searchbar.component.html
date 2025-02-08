@@ -1,0 +1,22 @@
+<mat-form-field appearance="outline">
+    <mat-label>Select Airport</mat-label>
+    <mat-select [(ngModel)]="selectedAirport">
+      <mat-option *ngFor="let airport of airports" [value]="airport.code">
+        {{ airport.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Select Date Range</mat-label>
+    <mat-date-range-input [rangePicker]="picker" [(ngModel)]="selectedDateRange">
+      <input matStartDate placeholder="Start date" [(ngModel)]="selectedDateRange.start">
+      <input matEndDate placeholder="End date" [(ngModel)]="selectedDateRange.end">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary" (click)="fetchFlights()">
+    Search Flights
+  </button>
