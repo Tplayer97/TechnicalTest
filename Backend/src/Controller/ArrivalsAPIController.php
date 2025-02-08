@@ -2,18 +2,33 @@
 
 namespace App\Controller;
 
+use App\Service\ArrivalsApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-final class ArrivalsAPIController extends AbstractController
+final class ArrivalsApiController extends AbstractController
 {
-    #[Route('/arrivals', name: 'app_arrivals_a_p_i')]
-    public function index(): Response
+    
+    public function __construct(private ArrivalsApiService $ArrivalsApiService) // We inject the service in the constructor
     {
-     
-        return $this->render('arrivals_api/index.html.twig', [
-            'controller_name' => 'ArrivalsAPIController',
-        ]);
     }
+
+    #[Route('/api/arrivals', name:'app_api_arrivals', methods: ['GET'])]
+    public function getArrivals(Request $request): JsonResponse
+    {
+        //we get the parameters from the query string
+        $airport = $request->query->get('airport', '');
+        $begin = $request->query->get('begin', '');
+        $end = $request->query->get('end', '');
+        try {
+            $data = $this->ArrivalsApiService->getArrivals($airport, $begin, $end);//we call our microservice
+            return $this->json($data, 200);
+        } catch (\Exception $e) {//we catch the exception and return an error message to the frontend in case something is wrong
+            return $this->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }
