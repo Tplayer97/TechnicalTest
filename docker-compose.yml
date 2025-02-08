@@ -1,3 +1,4 @@
+# we wil use this docker-compose file to run our symfony and angular app in two docker containers
 services:
     backend:
       build:
@@ -7,11 +8,10 @@ services:
       working_dir: /var/www/html
       volumes:
         - ./backend:/var/www/html
-      depends_on:
-        - database
       networks:
         - app_network
 
+    #we will use and nginx server to serve our symfony app, we will access it in localhost:9000
     nginx:
       image: nginx:latest
       container_name: nginx_server
@@ -25,6 +25,8 @@ services:
         - backend
       networks:
         - app_network
+
+    #the frontend will be served by an angular server, we will access it in localhost:4200
     frontend:
       build:
         context: ./Frontend
