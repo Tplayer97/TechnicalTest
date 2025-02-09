@@ -1,21 +1,26 @@
-<table mat-table [dataSource]="arrivals" matSort>
-    <ng-container matColumnDef="departure">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Departure Airport</th>
-      <td mat-cell *matCellDef="let flight">{{ flight.departure }}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="callsign">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Callsign</th>
-      <td mat-cell *matCellDef="let flight">{{ flight.callsign }}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="distance">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Distance</th>
-      <td mat-cell *matCellDef="let flight">{{ flight.distance }} km</td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<mat-form-field appearance="outline">
+  <mat-label>Select Columns</mat-label>
+  <mat-select [(ngModel)]="displayedColumns" multiple>
+    <mat-option *ngFor="let column of allColumns" [value]="column">
+      {{ columnLabels[column] }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<!-- Table with Sorting & Pagination -->
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <!-- Dynamic Column Definitions -->
+  <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columnLabels[column] }} </th>
+    <td mat-cell *matCellDef="let flight"> {{ flight[column] }} </td>
+  </ng-container>
+
+  <!-- Table Headers & Rows -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<!-- Paginator for Pagination -->
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

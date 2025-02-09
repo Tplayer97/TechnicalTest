@@ -1,22 +1,21 @@
-<mat-form-field appearance="outline">
+<form [formGroup]="form">
+  <mat-form-field appearance="outline">
     <mat-label>Select Airport</mat-label>
-    <mat-select [(ngModel)]="selectedAirport">
+    <mat-select formControlName="selectedAirport" (selectionChange)="fetchFlights()" [disabled]="isLoading">
       <mat-option *ngFor="let airport of airports" [value]="airport.code">
         {{ airport.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  
-  <mat-form-field appearance="outline">
+
+  <mat-form-field appearance="outline" (focus)="picker.open()">
     <mat-label>Select Date Range</mat-label>
-    <mat-date-range-input [rangePicker]="picker" [(ngModel)]="selectedDateRange">
-      <input matStartDate placeholder="Start date" [(ngModel)]="selectedDateRange.start">
-      <input matEndDate placeholder="End date" [(ngModel)]="selectedDateRange.end">
+    <mat-date-range-input [rangePicker]="picker" formGroupName="selectedDateRange" [disabled]="isLoading">
+      <input matStartDate placeholder="Begin date" formControlName="begin"  readonly> 
+      <input matEndDate placeholder="End date" formControlName="end" (dateChange)="fetchFlights()" readonly>
     </mat-date-range-input>
+    <mat-date-range-picker #picker  (closed)="pickerClose()" ></mat-date-range-picker>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
-  
-  <button mat-raised-button color="primary" (click)="fetchFlights()">
-    Search Flights
-  </button>
+  <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+</form>

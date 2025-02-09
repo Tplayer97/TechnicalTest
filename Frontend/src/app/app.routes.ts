@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch:  'full' },  // Main page that will redirect to home
+  { path: '', component: HomeComponent },  // Main page will be  home
   { path: 'home', component: HomeComponent},
 ];
 
