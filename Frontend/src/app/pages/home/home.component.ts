@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
-import { searchbarComponent } from '../../components/searchbarComponent/searchbar.component';
-import { tableComponent } from '../../components/tableComponent/table.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { SearchbarComponent } from '../../components/searchbarComponent/searchbar.component';
+import { TableComponent } from '../../components/tableComponent/table.component';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   standalone: true,
   imports: [
-    searchbarComponent,
-    tableComponent,
-    ReactiveFormsModule,
-    CommonModule
+    SearchbarComponent,
+    TableComponent,
   ]
 })
 export class HomeComponent {

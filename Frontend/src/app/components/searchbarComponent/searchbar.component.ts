@@ -10,10 +10,10 @@ import { ArrivalsService } from '../../services/arrivals.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
-
 @Component({
   selector: 'app-searchbar',
+  templateUrl: './searchbar.component.html',
+  styleUrls: ['./searchbar.component.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -27,9 +27,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDateRangeInput,
     MatProgressSpinnerModule,
   ],
-  templateUrl: './searchbar.component.html'
 })
-export class searchbarComponent {
+
+export class SearchbarComponent {
 
   @Output() arrivalsFound: EventEmitter<any[]> = new EventEmitter<any[]>(); // we are going to use this event emitter to send the data to the parent component so that it can send it to the sibling component table to display it
   @ViewChild(MatDateRangePicker, { static: false }) picker!: MatDateRangePicker<Date>;
@@ -42,7 +42,7 @@ export class searchbarComponent {
     })
   });
 
-  airports = [
+  airports = [ // we are going to use this array to store the airports that the user can select
     { code: 'LEZL', name: "Seville Airport" },
     { code: 'EDDF', name: "Frankfurt am Main Airport" },
     { code: 'LEMD', name: 'Adolfo Suárez Madrid-Barajas Airport' }
@@ -59,7 +59,7 @@ export class searchbarComponent {
     const endDate = this.form.get('selectedDateRange.end')?.value ?? null;
    
     if (!airport || (beginDate === null && !beginDate) || (endDate === null && !endDate)) {
-      return; // if any of the parameters is missing we are going to return and not proceed with the service
+      return; 
     }
     else {
       // if all the parameters are correct we are going to divide both timestamps by 1000 because getTime() returns a timestamp in milliseconds and the API is expecting them in seconds, we wait to divide them until this point to avoid dividing them if the user didn't select a date
@@ -79,16 +79,20 @@ export class searchbarComponent {
           end = timestampOfNow; 
           alert('The end date cannot be in the future, setting it to the current time'); // we are going to prevent the user from fetching data from the future by setting the end to the current time and inform him
         }
-        this.isLoading = true; //here we disable the input fields and show the loading spinner
-        this.cdRef.detectChanges(); // we are going to use this function to force the change detection to update the view and show the loading spinner
-        try {
-          const data = await this.arrivalsService.getArrivals(airport, begin, end);
-          this.arrivalsFound.emit(data); // we are going to emit the data to the parent component to display it in the table
-          console.log('Api Response:', data);
-        } catch (error) {
-          console.error('Error fetching arrivals:', error);
-        }
-        this.isLoading = false; // here we enable the input fields and hide the loading spinner
+        this.isLoading = true;
+        this.cdRef.detectChanges();
+      
+          this.arrivalsService.getArrivals(airport, begin, end).subscribe({
+            next: (data: any[]) =>{ 
+              this.arrivalsFound.emit(data);
+              this.isLoading = false;
+            },
+            error: () => {
+              alert('Error fetching arrivals');
+              this.isLoading = false;
+            },
+          });
+        
       }
     }
   }

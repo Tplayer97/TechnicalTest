@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
   standalone: true,
   imports: [
     MatTableModule,
@@ -26,7 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   ],
 
 })
-export class tableComponent {
+export class TableComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator; // we are going to use this variable to paginate the data in the table
   @ViewChild(MatSort) sort!: MatSort; // we are going to use this variable to sort the data in the table
   @Input() arrivals: any[] = []; // this variable is going to store the data that we are going to display in the table

@@ -1,0 +1,26 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #f5f5f5;
+    text-align: left;
+    padding: 10px;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+mat-paginator {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+mat-form-field {
+    margin-top: 20px;
+}
+
+
