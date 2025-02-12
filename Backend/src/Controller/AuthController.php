@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthController extends AbstractController
 {
-    #[Route('/api/login', methods: ['POST'])]
+   
 
     #[Route('/api/register', methods: ['POST'])]
     public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): JsonResponse
@@ -41,10 +41,9 @@ class AuthController extends AbstractController
 
         return new JsonResponse(['message' => 'User registered successfully'], 201);
     }
-    
+    #[Route('/api/login', methods: ['POST'])]
     public function login(UserInterface $user, JWTTokenManagerInterface $jwtManager): JsonResponse
     { 
-        // we are goin to use the JWTTokenManager service to create a new token and return it if the data is correct
         return new JsonResponse([
             'token' => $jwtManager->create($user),
         ]);

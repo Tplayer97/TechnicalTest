@@ -19,8 +19,10 @@ RUN mkdir -p var/cache var/log && \
     chmod -R 777 var/cache var/log
 
 COPY . .
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
+
+RUN docker-php-ext-install opcache
 
 RUN chown -R www-data:www-data /var/www/html
 
