@@ -7,7 +7,7 @@ export class AuthService {
   private tokenKey = 'jwt_token';
 
   //This may seem a little redundant with the login service, but that one will only be used in the login component, while this one will be used in multiple components to check if the user is authenticated.
-
+  //All functions are kinda self-explainatory
   setToken(token: string) {
     sessionStorage.setItem(this.tokenKey, token);
   }

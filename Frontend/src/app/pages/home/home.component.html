@@ -2,9 +2,9 @@
     <h2>Welcome to Flight Tracker</h2>
     <p>Select an airport and a date range to track arrivals.</p>
     <div class="searchbar-container">
-        <app-searchbar (arrivalsFound)="updateArrivals($event)"></app-searchbar> 
+        <app-searchbar (arrivalsFound)="updateArrivals($event)"></app-searchbar>
     </div>
     <div class="table-container">
         <app-table [arrivals]="arrivals"></app-table>
     </div>
-  </div>
+</div>

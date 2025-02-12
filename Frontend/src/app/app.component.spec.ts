@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'Frontend' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-  
+
   });
 
   it('should render title', () => {

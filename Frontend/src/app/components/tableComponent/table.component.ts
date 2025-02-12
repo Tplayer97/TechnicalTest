@@ -1,4 +1,4 @@
-import {  Component, Input, ViewChild} from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -43,18 +43,16 @@ export class TableComponent {
   allColumns: string[] = ['estDepartureAirport', 'callsign', 'estDepartureAirportHorizDistance'];
   displayedColumns: string[] = ['estDepartureAirport', 'callsign', 'estDepartureAirportHorizDistance'];
 
+  constructor() {
+  }
 
+  ngOnChanges() {
+    this.dataSource.data = this.arrivals;
+  }
+  ngOnInit() { }
 
-    constructor() {
-    }
-
-    ngOnChanges() {
-      this.dataSource.data = this.arrivals;
-    }
-    ngOnInit() {}
-
-    ngAfterViewInit() {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 }

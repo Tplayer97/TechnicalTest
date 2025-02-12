@@ -1,21 +1,25 @@
-import { Component, ChangeDetectorRef} from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: true, 
+  standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ],
 
 })
@@ -27,7 +31,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private loginService: LoginService, private router: Router, private cdRef: ChangeDetectorRef) {}
+  constructor(private loginService: LoginService, private router: Router, private cdRef: ChangeDetectorRef) { }
 
   login() {
     if (this.loginForm.valid) {

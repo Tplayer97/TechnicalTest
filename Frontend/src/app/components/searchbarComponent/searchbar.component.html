@@ -1,21 +1,28 @@
 <form [formGroup]="form">
-  <mat-form-field appearance="outline" >
+  <mat-form-field appearance="outline">
     <mat-label>Select Airport</mat-label>
     <mat-select formControlName="selectedAirport" (selectionChange)="fetchFlights()" [disabled]="isLoading">
       <mat-option *ngFor="let airport of airports" [value]="airport.code">
         {{ airport.name }}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="form.controls['selectedAirport'].hasError('required')">Airport is required</mat-error>
   </mat-form-field>
-
   <mat-form-field appearance="outline" (click)="picker.open()">
     <mat-label>Select Date Range</mat-label>
     <mat-date-range-input [rangePicker]="picker" formGroupName="selectedDateRange" [disabled]="isLoading">
-      <input matStartDate placeholder="Begin date" formControlName="begin"  > 
-      <input matEndDate placeholder="End date" formControlName="end" (dateChange)="fetchFlights()" >
+      <input matStartDate placeholder="Begin date" formControlName="begin">
+      <input matEndDate placeholder="End date" formControlName="end" (dateChange)="fetchFlights()">
     </mat-date-range-input>
-    <mat-date-range-picker #picker  (closed)="pickerClose()" ></mat-date-range-picker>
+    <mat-date-range-picker #picker (closed)="pickerClose()"></mat-date-range-picker>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-error *ngIf="form.get('selectedDateRange.end')?.hasError('dateInTheFuture')">
+      Start date cannot be in the future.
+    </mat-error>
+    <mat-error *ngIf="form.get('selectedDateRange.end')?.hasError('moreThanSevenDays')">
+      The API can only fetch 7 days per request
+    </mat-error>
   </mat-form-field>
+
   <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
 </form>
