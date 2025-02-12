@@ -4,10 +4,10 @@ services:
       build:
         context: ./Backend
       container_name: symfony_app
-      restart: unless-stopped
+      restart: always
       working_dir: /var/www/html
       volumes:
-        - ./backend:/var/www/html
+        - ./Backend:/var/www/html
       networks:
         - app_network
 
@@ -17,7 +17,7 @@ services:
       container_name: nginx_server
       restart: unless-stopped
       ports:
-        - "9000:9000"
+        - "9000:80"
       volumes:
         - ./Backend:/var/www/html
         - ./Backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -35,12 +35,29 @@ services:
       ports:
         - "8080:80"
       depends_on:
-        - backend
+        - nginx
+      networks:
+        - app_network
+
+    database:
+      image: mysql:8
+      container_name: symfony_database
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: symfony
+        MYSQL_USER: symfony
+        MYSQL_PASSWORD: symfony
+      ports:
+        - "3306:3306"
+      volumes:
+        - mysql_data:/var/lib/mysql
       networks:
         - app_network
 
 volumes:
-  db_data:
+  mysql_data: 
 
 networks:
   app_network:
+    driver: bridge
