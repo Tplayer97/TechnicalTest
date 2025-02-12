@@ -15,11 +15,16 @@ Thanks to the docker containers all you need to install before running this is D
 
 Steps:
 
-1.- open a console in the folder you would like to build this repo.
+1.- Unzip the project and open a bash (PowerShell) in the folder
 
-2.- run "git clone https://github.com/Tplayer97/TechnicalTest.git"
+2.- once you have all the folder run "docker-composer -d --build" (-d flag because we will need to run the command to import the backup.sql into our database)
 
-3.- once you have all the folder run "docker-composer -d --build" (-d flag because we will need to run the command to import the backup.sql into our database)
+3.- Once all the containers are running run docker exec -it symfony_app php bin/console doctrine:migrations:migrate to migrate the Symfony database to the database in the container
 
-4.- Once all the containers are running run docker exec -it symfony_app php bin/console doctrine:migrations:migrate to migrate the Symfony database to the database in the container
- 
+4.- Now in Postman we make a post request to: http://localhost:9000/api/register with body (type raw->JSON): {
+    "email": "jose@atexis.com",
+    "password": "asdf1234"
+}
+* We do this to create the user we are going to use for the test. We could have a register page in the future but for the purpose of this test we will create it by hand with postman
+
+5.- We go to: http://localhost:8080/ and use the previous information to login.
