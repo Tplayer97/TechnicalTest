@@ -14,3 +14,18 @@
      
   ./backup.sql is the backup we will use to create and populate the Data Base. 
 
+2.- Project building instructions:
+
+  Thanks to the docker containers all you need to install before running this is Docker Desktop (for the containers) and git (to clone the repo from Github)
+
+  Steps:
+
+  1.- open a console in the folder you would like to build this repo.
+
+  2.- run "git clone https://github.com/Tplayer97/TechnicalTest.git"
+
+  3.- once you have all the folder run "docker-composer -d --build" (-d flag because we will need to run the command to import the backup.sql into our database)
+
+  4.- Once all the containers are running run 
+
+
