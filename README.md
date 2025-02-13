@@ -7,7 +7,6 @@
 
 ./docker-compose.yml is the file we will call from the console (docker-compose up -d --build) to build the containers. There are 4 containers: - A container for the Symfony backend. - A container for nginx to serve the backend instead of using symfony's build in server. - A container for the Frontend. - A container for the Data Base that we will use to store the only user we have for the authentication (we will need to manually load a backup to have that user)
 
-./backup.sql is the backup we will use to create and populate the Data Base.
 
 2.- Project building instructions:
 
